@@ -15,13 +15,6 @@ use WCPay\Database_Cache;
 class WC_REST_Payments_Disputes_Controller extends WC_Payments_REST_Controller {
 
 	/**
-	 * Database_Cache instance.
-	 *
-	 * @var Database_Cache
-	 */
-	private $database_cache;
-
-	/**
 	 * Endpoint path.
 	 *
 	 * @var string
@@ -32,11 +25,9 @@ class WC_REST_Payments_Disputes_Controller extends WC_Payments_REST_Controller {
 	 * WC_REST_Payments_Disputes_Controller constructor.
 	 *
 	 * @param WC_Payments_API_Client $api_client     WooCommerce Payments API client.
-	 * @param Database_Cache         $database_cache Database_Cache instance.
 	 */
-	public function __construct( WC_Payments_API_Client $api_client, Database_Cache $database_cache ) {
-		$this->api_client     = $api_client;
-		$this->database_cache = $database_cache;
+	public function __construct( WC_Payments_API_Client $api_client ) {
+		$this->api_client = $api_client;
 	}
 
 	/**
@@ -192,7 +183,8 @@ class WC_REST_Payments_Disputes_Controller extends WC_Payments_REST_Controller {
 	 * @return WP_REST_Response|WP_Error The response containing the dispute status counts or an error in case there is a problem.
 	 */
 	public function get_dispute_status_counts( WP_REST_Request $request ) {
-		$disputes_status_counts = $this->database_cache->get_or_add(
+		$database_cache         = WC_Payments::get_database_cache();
+		$disputes_status_counts = $database_cache->get_or_add(
 			Database_Cache::DISPUTE_STATUS_COUNTS_KEY,
 			[ $this->api_client, 'get_dispute_status_counts' ],
 			// We'll consider all array values to be valid as the cache is only invalidated when it is deleted or it expires.
