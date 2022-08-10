@@ -3,7 +3,7 @@
 /**
  * External dependencies
  */
-import { apiFetch } from '@wordpress/data-controls';
+import apiFetch from '@wordpress/api-fetch';
 import { dispatch, select } from '@wordpress/data';
 import { __ } from '@wordpress/i18n';
 import wcpayTracks from 'tracks';

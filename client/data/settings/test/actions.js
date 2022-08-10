@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { dispatch, select } from '@wordpress/data';
-import { apiFetch } from '@wordpress/data-controls';
+import apiFetch from '@wordpress/api-fetch';
 import { findIndex } from 'lodash';
 
 /**
@@ -11,7 +11,7 @@ import { findIndex } from 'lodash';
 import { saveSettings, updateIsSavingSettings } from '../actions';
 
 jest.mock( '@wordpress/data' );
-jest.mock( '@wordpress/data-controls' );
+jest.mock( '@wordpress/api-fetch' );
 
 describe( 'Settings actions tests', () => {
 	describe( 'saveSettings()', () => {

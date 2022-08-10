@@ -4,7 +4,7 @@
  * External dependencies
  */
 import { dispatch, select } from '@wordpress/data';
-import { apiFetch } from '@wordpress/data-controls';
+import apiFetch from '@wordpress/api-fetch';
 import { __ } from '@wordpress/i18n';
 
 /**

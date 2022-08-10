@@ -3,7 +3,7 @@
 /**
  * External dependencies
  */
-import { apiFetch } from '@wordpress/data-controls';
+import apiFetch from '@wordpress/api-fetch';
 import { dispatch } from '@wordpress/data';
 import { __, sprintf } from '@wordpress/i18n';
 import { formatCurrency } from 'utils/currency';

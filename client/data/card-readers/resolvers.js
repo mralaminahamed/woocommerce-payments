@@ -3,7 +3,7 @@
 /**
  * External dependencies
  */
-import { apiFetch } from '@wordpress/data-controls';
+import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';
 
 /**
@@ -43,6 +43,7 @@ export function* getCardReaders( query ) {
 
 		yield updateCardReaders( query, results );
 	} catch ( e ) {
+		console.debug( 'DEU ERRO', e );
 		yield updateErrorForCardReaders( null, e );
 	}
 }

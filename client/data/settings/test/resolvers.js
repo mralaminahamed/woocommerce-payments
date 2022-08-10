@@ -2,7 +2,7 @@
  * External dependencies
  */
 import { dispatch } from '@wordpress/data';
-import { apiFetch } from '@wordpress/data-controls';
+import apiFetch from '@wordpress/api-fetch';
 
 /**
  * Internal dependencies
@@ -11,7 +11,7 @@ import { getSettings } from '../resolvers';
 import { updateSettings } from '../actions';
 
 jest.mock( '@wordpress/data' );
-jest.mock( '@wordpress/data-controls' );
+jest.mock( '@wordpress/api-fetch' );
 
 describe( 'Settings resolvers tests', () => {
 	describe( 'getSettings()', () => {
