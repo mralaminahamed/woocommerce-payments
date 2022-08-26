@@ -20,6 +20,7 @@ import {
 	shopperWCP,
 	merchantWCP,
 	describeif,
+	checkPageExists,
 	RUN_WC_BLOCKS_TESTS,
 } from '../../../utils';
 
@@ -35,9 +36,12 @@ describeif( RUN_WC_BLOCKS_TESTS )(
 	'WooCommerce Blocks > Successful purchase',
 	() => {
 		beforeAll( async () => {
-			await merchant.login();
-			await merchantWCP.addNewPageCheckoutWCB();
-			await merchant.logout();
+			// Check whether block checkout page exists & create if required
+			await checkPageExists( 'checkout-wcb' ).catch( () => {
+				merchant.login();
+				merchantWCP.addNewPageCheckoutWCB();
+				merchant.logout();
+			} );
 		} );
 
 		it( 'using a basic card', async () => {
