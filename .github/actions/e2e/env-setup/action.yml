@@ -79,3 +79,9 @@ runs:
         echo "::group::Setup E2E test environment"
         npm run test:e2e-setup
         echo "::endgroup::"
+
+    # List docker containers running
+    - name: List docker containers
+      shell: bash
+      run: |
+        docker container ls
