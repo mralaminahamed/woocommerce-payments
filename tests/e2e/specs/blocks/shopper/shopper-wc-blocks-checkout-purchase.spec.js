@@ -37,11 +37,13 @@ describeif( RUN_WC_BLOCKS_TESTS )(
 	() => {
 		beforeAll( async () => {
 			// Check whether block checkout page exists & create if required
-			await checkPageExists( 'checkout-wcb' ).catch( () => {
-				merchant.login();
-				merchantWCP.addNewPageCheckoutWCB();
-				merchant.logout();
-			} );
+			try {
+				await checkPageExists( 'checkout-wcb' );
+			} catch ( error ) {
+				await merchant.login();
+				await merchantWCP.addNewPageCheckoutWCB();
+				await merchant.logout();
+			}
 		} );
 
 		it( 'using a basic card', async () => {
