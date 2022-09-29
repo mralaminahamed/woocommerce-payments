@@ -25,12 +25,10 @@ export const takeScreenshot = ( name ) => {
 // Check whether specified page exists
 export const checkPageExists = async ( slug ) => {
 	const wcbPage = await page.goto( config.get( 'url' ) + slug, {
-		waitUntil: 'networkidle0',
+		waitUntil: 'load',
 	} );
 
 	if ( 404 === wcbPage.status() ) {
-		Promise.reject();
-	} else {
-		Promise.resolve();
+		return Promise.reject();
 	}
 };
