@@ -18,6 +18,7 @@ const {
 	fillCardDetails,
 	confirmCardAuthentication,
 } = require( '../utils/payments' );
+const { publishPost, insertBlock } = require( '@wordpress/e2e-test-utils' );
 
 const config = require( 'config' );
 const baseUrl = config.get( 'url' );
@@ -436,43 +437,25 @@ export const merchantWCP = {
 	},
 
 	addNewPageCheckoutWCB: async () => {
+		await page.on( 'dialog', async ( dialog ) => {
+			await dialog.accept();
+		} );
+
 		await page.goto( WP_ADMIN_PAGES, {
 			waitUntil: 'networkidle0',
 		} );
 
 		// Add a new page called "Checkout WCB"
-		await page.keyboard.press( 'Escape' ); // to dismiss a dialog if present
 		await expect( page ).toClick( '.page-title-action', {
 			waitUntil: 'networkidle0',
 		} );
+
 		await page.waitForSelector( 'h1.editor-post-title__input' );
 		await page.type( 'h1.editor-post-title__input', 'Checkout WCB' );
+		await insertBlock( 'Checkout' );
+		await publishPost();
 
-		// Insert new checkout by WCB (searching for Checkout block and pressing Enter)
-		await expect( page ).toClick(
-			'button.edit-post-header-toolbar__inserter-toggle'
-		);
-		await expect( page ).toFill(
-			'div.components-search-control__input-wrapper > input.components-search-control__input',
-			'Checkout'
-		);
-		await page.keyboard.press( 'Tab' );
-		await page.keyboard.press( 'Tab' );
-		await page.keyboard.press( 'Enter' );
-
-		// Dismiss dialog about potentially compatibility issues
-		await page.keyboard.press( 'Escape' ); // to dismiss a dialog if present
-
-		// Publish the page
-		await expect( page ).toClick(
-			'button.editor-post-publish-panel__toggle'
-		);
-		await page.waitForSelector( '.editor-post-publish-panel' );
-		await expect( page ).toClick( 'button.editor-post-publish-button' );
-		await page.waitForSelector(
-			'.components-snackbar__content',
-			'Page updated.'
-		);
+		await page.removeAllListeners( 'dialog' );
 	},
 
 	setCheckboxByTestId: async ( testId ) => {
