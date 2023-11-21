@@ -186,28 +186,6 @@ export const handleWooPayEmailInput = async (
 		// Set the initial value.
 		iframeHeaderValue = true;
 
-		if ( getConfig( 'isWoopayFirstPartyAuthEnabled' ) ) {
-			request(
-				buildAjaxURL( getConfig( 'wcAjaxUrl' ), 'get_woopay_session' ),
-				{
-					_ajax_nonce: getConfig( 'woopaySessionNonce' ),
-					order_id: getConfig( 'order_id' ),
-					key: getConfig( 'key' ),
-					billing_email: getConfig( 'billing_email' ),
-				}
-			).then( ( response ) => {
-				if ( response?.data?.session ) {
-					iframe.contentWindow.postMessage(
-						{
-							action: 'setSessionData',
-							value: response,
-						},
-						getConfig( 'woopayHost' )
-					);
-				}
-			} );
-		}
-
 		getWindowSize();
 		window.addEventListener( 'resize', getWindowSize );
 
