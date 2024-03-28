@@ -399,6 +399,12 @@ export async function mountStripePaymentElement( api, domElement ) {
 		gatewayUPEComponents[ paymentMethodType ].upeElement ||
 		( await createStripePaymentElement( api, paymentMethodType ) );
 	upeElement.mount( domElement );
+	upeElement.on( 'loaderror', ( e ) => {
+		// showErrorCheckout( e.error.message );
+		domElement.innerHTML = e.error.message;
+		domElement.style.margin = '0';
+		jQuery( domElement ).addClass( 'woocommerce-error' );
+	} );
 }
 
 /**
@@ -461,7 +467,7 @@ export const processPayment = (
 
 	blockUI( $form );
 
-	const elements = gatewayUPEComponents[ paymentMethodType ].elements;
+	const { elements } = gatewayUPEComponents[ paymentMethodType ];
 
 	( async () => {
 		try {

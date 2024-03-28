@@ -11,7 +11,7 @@ import {
 	// eslint-disable-next-line import/no-unresolved
 } from '@woocommerce/blocks-registry';
 import { __ } from '@wordpress/i18n';
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useEffect, useRef } from 'react';
 
 /**
  * Internal dependencies
@@ -27,6 +27,7 @@ import {
 import enableStripeLinkPaymentMethod from 'wcpay/checkout/stripe-link';
 import { getUPEConfig } from 'wcpay/utils/checkout';
 import { validateElements } from 'wcpay/checkout/classic/payment-processing';
+import { useState } from '@wordpress/element';
 
 const getBillingDetails = ( billingData ) => {
 	return {
@@ -73,6 +74,13 @@ const PaymentProcessor = ( {
 		setShippingAddress,
 		setBillingAddress,
 	} = useCustomerData();
+
+	useLayoutEffect( () => {
+		elements.on( 'loaderror', ( e ) => {
+			debugger;
+			// not called
+		} );
+	}, [ elements ] );
 
 	useEffect( () => {
 		if ( isLinkEnabled( paymentMethodsConfig ) ) {
@@ -253,6 +261,14 @@ const PaymentProcessor = ( {
 					shouldSavePayment,
 					paymentMethodsConfig
 				) }
+				onLoadError={ ( e ) => {
+					// not called
+					debugger;
+				} }
+				onLoaderror={ ( e ) => {
+					// not called
+					debugger;
+				} }
 				onChange={ updatePaymentElementCompletionStatus }
 				className="wcpay-payment-element"
 			/>
