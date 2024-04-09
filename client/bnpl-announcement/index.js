@@ -14,15 +14,15 @@ import './style.scss';
 import ConfirmationModal from 'wcpay/components/confirmation-modal';
 import {
 	AffirmIcon,
-	AfterpayIcon,
+	AfterpayPillIcon,
 	ClearpayIcon,
-	KlarnaIcon,
+	KlarnaPillIcon,
 } from 'wcpay/payment-methods-icons';
 
 const AfterpayClearpayIcon =
 	window.wcpayBnplAnnouncement?.accountStatus?.country === 'GB'
 		? ClearpayIcon
-		: AfterpayIcon;
+		: AfterpayPillIcon;
 
 const Dialog = () => {
 	useEffect( () => {
@@ -66,12 +66,13 @@ const Dialog = () => {
 			}
 		>
 			<div className="wcpay-bnpl-announcement__payment-icons">
-				<KlarnaIcon />
+				<KlarnaPillIcon />
 				<AfterpayClearpayIcon />
 				<AffirmIcon />
 			</div>
 			<p>
 				{ __(
+					// eslint-disable-next-line max-len
 					'Boost conversions and give your shoppers additional buying power, with buy now, pay later — now available in your WooPayments dashboard *.',
 					'woocommerce-payments'
 				) }

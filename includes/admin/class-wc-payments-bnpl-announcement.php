@@ -51,9 +51,9 @@ class WC_Payments_Bnpl_Announcement {
 			return;
 		}
 
-		if ( get_user_meta( get_current_user_id(), '_wcpay_bnpl_april15_viewed', true ) === '1' ) {
-			return;
-		}
+		// if ( get_user_meta( get_current_user_id(), '_wcpay_bnpl_april15_viewed', true ) === '1' ) {
+		// 	return;
+		// }
 
 		// just to be safe for older versions.
 		if ( ! class_exists( '\Automattic\WooCommerce\Admin\PageController' ) ) {
@@ -85,7 +85,7 @@ class WC_Payments_Bnpl_Announcement {
 			\WCPay\Constants\Payment_Method::BNPL_PAYMENT_METHODS,
 			$this->gateway->get_upe_enabled_payment_method_ids()
 		);
-		if ( ! empty( $enabled_bnpl_payment_methods ) ) {
+		if ( false && ! empty( $enabled_bnpl_payment_methods ) ) {
 			return;
 		}
 
